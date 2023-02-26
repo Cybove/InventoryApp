@@ -1,0 +1,49 @@
+﻿<Window x:Class="InventoryApp.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:InventoryApp.ViewModels"
+    xmlns:c="clr-namespace:InventoryApp.Commands"
+    xmlns:local="clr-namespace:InventoryApp"
+    mc:Ignorable="d"
+    Title="Inventory App" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <TextBox
+                Text="{Binding AddItemParametersInstance.Name, UpdateSourceTrigger=PropertyChanged}"
+                Width="150" Height="20" />
+            <TextBox
+                Text="{Binding AddItemParametersInstance.Description, UpdateSourceTrigger=PropertyChanged}"
+                Width="150" Height="20" />
+            <TextBox
+                Text="{Binding AddItemParametersInstance.Quantity, UpdateSourceTrigger=PropertyChanged, StringFormat='N0'}"
+                Width="50" Height="20" />
+
+
+            <Button Content="Add" Command="{Binding AddCommand}"
+                CommandParameter="{Binding AddItemParametersInstance}" Margin="5" />
+
+            <Button Content="Delete" Command="{Binding DeleteCommand}"
+                CommandParameter="{Binding CurrentItem}" Margin="5" />
+            <Button Content="Update" Command="{Binding UpdateCommand}"
+                CommandParameter="{Binding CurrentItem}" Margin="5" />
+
+        </StackPanel>
+        <DataGrid
+            ItemsSource="{Binding Inventory, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+            AutoGenerateColumns="False" Grid.Row="1"
+            SelectedItem="{Binding CurrentItem}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding ID}" Header="ID" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding Description}" Header="Description" />
+                <DataGridTextColumn Binding="{Binding Quantity}" Header="Quantity" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
